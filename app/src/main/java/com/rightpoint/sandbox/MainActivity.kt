@@ -2,7 +2,9 @@ package com.rightpoint.sandbox
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import org.opencv.android.OpenCVLoader
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +14,12 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         sample_text.text = stringFromJNI()
+
+        if (!OpenCVLoader.initDebug()) {
+            Log.e("MainActivity", "  OpenCVLoader.initDebug(), not working.");
+        } else {
+            Log.d("MainActivity", "  OpenCVLoader.initDebug(), working.");
+        }
     }
 
     /**
@@ -25,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         // Used to load the 'native-lib' library on application startup.
         init {
             System.loadLibrary("native-lib")
+            System.loadLibrary("opencv_java3")
         }
     }
 }
